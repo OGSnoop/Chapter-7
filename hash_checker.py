@@ -169,6 +169,31 @@ def comp_all_dir():
                         print()
                         print('Directory %s permissions have been altered.\n' % i)
 
+def comp_all_file():
+        global file_hash_dic, org_file_dic
+        firp = open('/root/Documents/firp.txt', 'r')
+        firp_lines = firp.readlines()
+        firp.close()
+        firlist = []
+        for i in range(len(firp_lines)):
+                line = firp_lines[i]
+                tokens = line.split(':')
+                filelist.append(tokens[0])
+                org_file_dic[tokens[0]]=tokens[1]
+                perm = subprocess.check_output(['ls', '-l', tokens[0]])
+                file_hash = hashlib.sha1(perm).hexdigest()
+                file_hash_dic[tokens[0]]=file_hash
+        for i in filelist:
+                new = file_hash_dic[i]
+                org = org_file_dic[i].strip()
+                if new == org:
+                        print()
+                        print('File %s permissions are secure.\n' % i)
+                else:
+                        print()
+                        print('File %s permissions have been altered.\n' % i)
+
+
 def program():
 	contin = 'true'
 	while contin == 'true':
@@ -187,10 +212,20 @@ def program():
                 if option == 'q':
                         contin = 'false'
                 elif option == 'd':
+                        try:
+                                read_dir()
+                                subprocess.check_output(['rm', '-f', '/root/Documents/dirp.txt'])
+                        except:
+                                print('A new file will be created')
                         org_dirdic()
                         write_dir()
                         
                 elif option == 'f':
+                        try:
+                                read_file()
+                                subprocess.check_output(['rm', '-f', '/root/Documents/firp.txt'])
+                        except:
+                                print('A new file will be created')
                         org_filehashdic()
                         write_file()
 			
@@ -210,7 +245,8 @@ def program():
                         comp_all_dir()
                         
                 elif option == 'cfa':
-                        pass
+                        comp_all_file()
+                        
                 elif option == 'k':
                         key_gen()
                 else:
@@ -218,4 +254,4 @@ def program():
                         print()
 
 program()
-	
+
