@@ -219,7 +219,7 @@ def comp_all_file():
 
 #This is the key that will be used to encrypt and decrypt throughout the program
 #This part of the code would not work properly for odd reasons
-
+"""
 def key_gen():
         global key
         contin = 'true'
@@ -241,13 +241,13 @@ def key_gen():
 key = b'fishcakes!@PARIS'               #######COMMENT########
 print(type(key))                        #######COMMENT########
 print(key)                              #######COMMENT########
-"""
+
 #Here is my class for this assignment organizing encryption part of the program away from the rest
 class Dencrypt():
         def __init__(self, key):
                 self.key=key
-                print(type(key))               ##########UNCOMMENT#####
-                print(key)                     ########UNCOMMENT#####
+                #print(type(key))               ##########UNCOMMENT#####
+                #print(key)                     ########UNCOMMENT#####
 
 #The pad is what extends blocks of text that are not long enough for proper encryption
 #There is a function now for this in Pycryptodome but it was easier for me to understand
@@ -291,7 +291,7 @@ class Dencrypt():
                 pi_file.write(decryption)       #writes the decrypted text
                 os.remove(file)                 #removes the encrypted document
 
-#enc = Dencrypt(key)             ########COMMMENT########
+enc = Dencrypt(key)             ########COMMMENT########
 #main function that connects all of the other functions
 def program():
 	contin = 'true'
